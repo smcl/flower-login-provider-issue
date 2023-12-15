@@ -1,3 +1,5 @@
+EDIT: what tripped me was I was working with little cut down examples, rather than our main application. In this case I was missing an `__init__.py` - when that file is included then specifying `--auth_provider="auth0.Auth0LoginProvider"` worked just fine.
+
 Very stripped down and simplified app to explore how to specify a custom `--auth_provider` outside the Flower codebase. Requires Redis running on `localhost:6379`.
 
 Set up a venv and `pip install -r requirements.txt`. The goal is to find the appropriate value to supply to `--auth_provider` so that the `Auth0LoginHandler` class in `auth0.py` module is used and we get redirected to Auth0:
@@ -8,6 +10,6 @@ I've tried:
 - `--auth_provider="auth0.Auth0LoginProvider"`
 - `--auth_provider="Auth0LoginProvider"`
 
-But when I open localhost:5555 I get a 500 error, and the app prints a stack trace with `ModuleNotFoundError: No module named 'Auth0LoginHandler'`
+But when I open localhost:5555 I get a 500 error, and the app prints a stack trace with `ModuleNotFoundError: No module named 'auth0'` or `ModuleNotFoundError: No module named 'Auth0LoginHandler'`
 
-Note that I've not supplied the client secret so when the app "works" we'll get redirected to Auth0 but we'll be presented with an error page on their side. That is fine, the main thing is ensuring the provider gets picked up by Flower.
+Note that I've not supplied the client secret so when the app "works" we'll get redirected to Auth0 but we'll be presented with an error page on their side. That is fine, the main thing is ensuring the provider gets picked up and used by Flower.
